@@ -1,0 +1,32 @@
+[tool.black]
+line-length = 120
+
+[project]
+name = "pyrsistent-as-rpds-py"
+version = "0.0.1"
+description = "Adapter which implements a minimal subset of rpds using pyrsistent. Mostly meant for PyPy."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Eduard Christian Dumitrescu", email = "eduard.c.dumitrescu@gmail.com" },
+]
+maintainers = [
+    { name = "Eduard Christian Dumitrescu", email = "eduard.c.dumitrescu@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3"
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://fossil.example.com/"
+Changelog = "https://fossil.example.com/file?name=CHANGELOG.md&ci=trunk"
+
+[project.scripts]
+# your_executable_name = "rpds.cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+"*" = ["*.*"]

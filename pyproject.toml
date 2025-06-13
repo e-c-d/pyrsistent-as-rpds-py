@@ -3,7 +3,7 @@ line-length = 120
 
 [project]
 name = "pyrsistent-as-rpds-py"
-version = "0.0.1"
+version = "1.0.0"
 description = "Adapter which implements a minimal subset of rpds using pyrsistent. Mostly meant for PyPy."
 readme = "README.md"
 license = { text = "MIT" }
@@ -16,11 +16,10 @@ maintainers = [
 classifiers = [
     "Programming Language :: Python :: 3"
 ]
-dependencies = []
+dependencies = ["pyrsistent"]
 
 [project.urls]
-Homepage = "https://fossil.example.com/"
-Changelog = "https://fossil.example.com/file?name=CHANGELOG.md&ci=trunk"
+Homepage = "https://github.com/e-c-d/pyrsistent-as-rpds-py/"
 
 [project.scripts]
 # your_executable_name = "rpds.cli:app"

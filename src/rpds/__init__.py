@@ -1,7 +1,11 @@
 import abc
-import pyrsistent as _pyr
 import typing as ty
 from collections import abc as cabc
+
+import pyrsistent
+
+
+__all__ = ["HashTrieMap", "HashTrieSet", "Queue", "List"]
 
 
 class _ReprMixin(abc.ABC):
@@ -161,11 +165,11 @@ class _ReprMixinListLike(_ReprMixinSetLike):
 
 class HashTrieMap(_PyrEqBoolHash, _PyrCollection, _Common, ty.Generic[K, V], cabc.Mapping, ty.Hashable):
     _abstract_type = cabc.Mapping
-    _pyr_type = _pyr.PMap
+    _pyr_type = pyrsistent.PMap
 
     @classmethod
     def _pyr_make(cls, *args):
-        p = _pyr.m()
+        p = pyrsistent.m()
         if args:
             p = cls._pyr_update(p, args[0])
         return p
@@ -342,14 +346,14 @@ class HashTrieSet(
     _PyrEqBoolHash, _PyrCollection, _ReprMixinSetLike, _Common, ty.Generic[K], cabc.Set, ty.Hashable
 ):
     _abstract_type = cabc.Set
-    _pyr_type = _pyr.PSet
+    _pyr_type = pyrsistent.PSet
 
     @staticmethod
     def _pyr_make(*args):
         if not args:
-            return _pyr.pset(pre_size=128)
+            return pyrsistent.pset(pre_size=128)
         else:
-            return _pyr.pset(*args)
+            return pyrsistent.pset(*args)
 
     def insert(self, key):
         return self._from_pyr(self.pyr_data.add(key))
@@ -379,11 +383,11 @@ class HashTrieSet(
 
 class List(_PyrEqBoolHash, _PyrCollection, _ReprMixinListLike, _Common, ty.Generic[V], cabc.Sequence, ty.Hashable):
     _abstract_type = cabc.Sequence
-    _pyr_type = _pyr.PList
+    _pyr_type = pyrsistent.PList
 
     @staticmethod
     def _pyr_make(*args):
-        return _pyr.plist(*args)
+        return pyrsistent.plist(*args)
 
     def drop_first(self):
         if self.is_empty:
@@ -412,12 +416,12 @@ class List(_PyrEqBoolHash, _PyrCollection, _ReprMixinListLike, _Common, ty.Gener
 
 
 class Queue(_PyrEqBoolHash, _PyrCollection, _Common, ty.Generic[V], cabc.Sequence, ty.Hashable):
-    _pyr_type = _pyr.PDeque
+    _pyr_type = pyrsistent.PDeque
     _abstract_type = cabc.Sequence
 
     @staticmethod
     def _pyr_make(*args):
-        return _pyr.pdeque(*args)
+        return pyrsistent.pdeque(*args)
 
     def enqueue(self, value):
         return self._from_pyr(self.pyr_data.append(value))

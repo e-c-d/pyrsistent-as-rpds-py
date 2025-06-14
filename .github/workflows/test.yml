@@ -15,11 +15,15 @@ jobs:
           py=python3
 
           $py -m pip install -e .
-          $py -m pip install pyperf pytest pytest-subtests
+          $py -m pip install pyperf pytest pytest-subtests pytest-run-parallel
+
+          # run our own tests first
+          $py -m pytest tests/
 
           wget -O jsonschema.tar.gz  https://github.com/python-jsonschema/jsonschema/archive/refs/tags/v4.24.0.tar.gz
           wget -O referencing.tar.gz https://github.com/python-jsonschema/referencing/archive/refs/tags/v0.36.2.tar.gz
           wget -O referencing-suite.tar.gz https://github.com/python-jsonschema/referencing-suite/archive/ee66bf604dc74e79c2ca395873f24ea58e2eca74.tar.gz
+
           mkdir js rf
           tar --strip-components=1 -C js       -xf jsonschema.tar.gz
           tar --strip-components=1 -C rf       -xf referencing.tar.gz

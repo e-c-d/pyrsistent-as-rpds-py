@@ -29,7 +29,7 @@ Pre-modification, these were MIT licensed, and are copyright:
 
 import pytest
 
-from rpds import Queue
+from pyrsistent_as_rpds.auto import Queue
 
 
 def test_literalish_works():

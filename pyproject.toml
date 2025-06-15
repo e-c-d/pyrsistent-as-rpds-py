@@ -2,8 +2,8 @@
 line-length = 120
 
 [project]
-name = "pyrsistent-as-rpds-py"
-version = "1.1.0"
+name = "pyrsistent_as_rpds_py"
+version = "2.0.0"
 description = "Adapter which implements a subset of rpds-py using pyrsistent. Mostly meant for PyPy."
 readme = "README.md"
 license = { text = "MIT" }
@@ -16,7 +16,12 @@ maintainers = [
 classifiers = [
     "Programming Language :: Python :: 3"
 ]
-dependencies = ["pyrsistent"]
+dependencies = []
+
+[project.optional-dependencies]
+pure       = ["pyrsistent"]
+pyrsistent = ["pyrsistent"]
+rpds-py = ["rpds-py"]
 
 [project.urls]
 Homepage = "https://github.com/e-c-d/pyrsistent-as-rpds-py/"

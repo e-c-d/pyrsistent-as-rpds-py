@@ -4,6 +4,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.0.0] - 2025-06-14
+
+### Added
+
+- Add module `pyrsistent_as_rpds.auto` which tries to import the original
+  `rpds-py` package first, then falls back to importing the pure-Python
+  `pyrsistent`-based implementation.
+
+### Changed
+
+- Move the pure-Python implementation to `pyrsistent_as_rpds.pure`. This is
+  a breaking change because the top-level package `pyrsistent_as_rpds` is now
+  empty.
+
+## [1.1.0] - 2025-06-13
+
+### Changed
+
+- Add much more of the API in order to make the `rpds-py` tests pass.
+
 ## [1.0.0] - 2025-06-13
 
 ### Added

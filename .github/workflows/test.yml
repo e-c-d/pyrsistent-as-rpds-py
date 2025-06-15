@@ -2,26 +2,70 @@ name: Run tests
 on: [push]
 
 jobs:
-  test-jsonschema:
-    name: Run jsonschema tests against this library
+  test-self:
+    strategy:
+      matrix:
+        pyr_variant: ["pyrsistent", "rpds-py", "pyrsistent,rpds-py"]
+        pyr_fake: ["with_fake", "without_fake"]
+        exclude:  # can't install both the fake one and the real one, they will conflict
+          - pyr_variant: "rpds-py"
+            pyr_fake: "with_fake"
+          - pyr_variant: "pyrsistent,rpds-py"
+            pyr_fake: "with_fake"
+    name: Self-test (${{ matrix.pyr_variant }} ${{ matrix.pyr_fake }})
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: "pyr"
 
-      - name: download
+      - name: run tests
         shell: bash
         run: |
           set -e
           py=python3
 
-          $py -m pip install -e .
-          $py -m pip install pyperf pytest pytest-subtests pytest-run-parallel
+          if [ ${{ matrix.pyr_fake }} = with_fake ]; then
+            pushd pyr/extra/fake_rpds
+            $py -m pip install .
+            popd
+          fi
+
+          cd pyr
+          $py -m pip install -e .[${{ matrix.pyr_variant }}]
+          $py -m pip install pytest
 
           # run our own tests first
           $py -m pytest tests/
 
-          wget -O jsonschema.tar.gz  https://github.com/python-jsonschema/jsonschema/archive/refs/tags/v4.24.0.tar.gz
-          wget -O referencing.tar.gz https://github.com/python-jsonschema/referencing/archive/refs/tags/v0.36.2.tar.gz
+  test-jsonschema:
+    name: Run jsonschema tests against this library
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: "pyr"
+
+      - name: run tests
+        shell: bash
+        run: |
+          set -e
+          py=python3
+
+          pushd pyr
+          $py -m pip install -e .[pyrsistent]
+          $py -m pip install pyperf pytest pytest-subtests pytest-run-parallel
+          popd
+
+          pushd pyr/extra/fake_rpds
+          $py -m pip install .
+          popd
+
+          V_JSONSCHEMA=4.24.0
+          V_REFERENCING=0.36.2
+
+          wget -O jsonschema.tar.gz  https://github.com/python-jsonschema/jsonschema/archive/refs/tags/v$V_JSONSCHEMA.tar.gz
+          wget -O referencing.tar.gz https://github.com/python-jsonschema/referencing/archive/refs/tags/v$V_REFERENCING.tar.gz
           wget -O referencing-suite.tar.gz https://github.com/python-jsonschema/referencing-suite/archive/ee66bf604dc74e79c2ca395873f24ea58e2eca74.tar.gz
 
           mkdir js rf
@@ -29,12 +73,8 @@ jobs:
           tar --strip-components=1 -C rf       -xf referencing.tar.gz
           tar --strip-components=1 -C rf/suite -xf referencing-suite.tar.gz
 
-          sed -i -e 's/^dynamic =.*/version = "4.24.0"/' js/pyproject.toml
-          sed -i -e 's/^dynamic =.*/version = "0.36.2"/' rf/pyproject.toml
-
-          pushd extra/fake_rpds
-          $py -m pip install .
-          popd
+          sed -i -e 's/^dynamic =.*/version = "'"$V_JSONSCHEMA"'"/' js/pyproject.toml
+          sed -i -e 's/^dynamic =.*/version = "'"$V_REFERENCING"'"/' rf/pyproject.toml
 
           pushd rf
           $py -m pip install --break-system-packages -e .

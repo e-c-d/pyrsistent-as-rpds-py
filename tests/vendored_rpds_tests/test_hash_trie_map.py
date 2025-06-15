@@ -34,7 +34,7 @@ import sysconfig
 
 import pytest
 
-from rpds import HashTrieMap
+from pyrsistent_as_rpds.auto import HashTrieMap
 
 # see https://github.com/python/cpython/issues/127065,
 # remove this when the CPython bug is fixed in a released version

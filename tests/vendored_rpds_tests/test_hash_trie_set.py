@@ -32,7 +32,7 @@ import pickle
 
 import pytest
 
-from rpds import HashTrieSet
+from pyrsistent_as_rpds.auto import HashTrieSet
 
 
 def test_key_is_tuple():

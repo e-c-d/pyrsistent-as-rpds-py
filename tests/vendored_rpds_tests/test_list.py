@@ -31,7 +31,7 @@ import pickle
 
 import pytest
 
-from rpds import List
+from pyrsistent_as_rpds.auto import List
 
 
 def test_literalish_works():

@@ -2,10 +2,19 @@ import abc
 import typing as ty
 from collections import abc as cabc
 
-import pyrsistent
+try:
+    import pyrsistent
+except ImportError:
+    raise AssertionError(
+        "You must install this package as either `pyrsistent-as-rpds-py[pyrsistent]` or "
+        "`pyrsistent-as-rpds-py[rpds-py]`.\n\nThis is necessary because pip does not support "
+        "alternative dependencies (e.g., require either X or Y to be installed)."
+    )
 
 
-__all__ = ["HashTrieMap", "HashTrieSet", "Queue", "List"]
+__all__ = ["HashTrieMap", "HashTrieSet", "Queue", "List", "is_pure_pyrsistent_as_rpds"]
+
+is_pure_pyrsistent_as_rpds = True
 
 
 class _ReprMixin(abc.ABC):
@@ -342,9 +351,7 @@ class values_view(_ReprMixinListLike, cabc.ValuesView, ty.Hashable):
         return hash(self.original_map.pyr_data.values())
 
 
-class HashTrieSet(
-    _PyrEqBoolHash, _PyrCollection, _ReprMixinSetLike, _Common, ty.Generic[K], cabc.Set, ty.Hashable
-):
+class HashTrieSet(_PyrEqBoolHash, _PyrCollection, _ReprMixinSetLike, _Common, ty.Generic[K], cabc.Set, ty.Hashable):
     _abstract_type = cabc.Set
     _pyr_type = pyrsistent.PSet
 

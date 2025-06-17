@@ -29,6 +29,9 @@ jobs:
             pushd pyr/extra/fake_rpds
             $py -m pip install .
             popd
+            export PYR_RPDS_TESTS_HAS_FAKE=1
+          else
+            export PYR_RPDS_TESTS_HAS_FAKE=0
           fi
 
           cd pyr

@@ -4,7 +4,7 @@
 
 ## what is this?
 
-This is a thin adapter library which implements a subset of `rpds-py` using `pyrsistent`. The provided functionality is sufficient to run the `jsonschema` test cases successfully.
+This is a thin adapter library which implements a subset of [rpds-py](https://pypi.org/project/rpds-py/) using [pyrsistent](https://pypi.org/project/pyrsistent/). The provided functionality is sufficient to run the [jsonschema](https://pypi.org/project/jsonschema/) test cases successfully.
 
 ## why is this?
 

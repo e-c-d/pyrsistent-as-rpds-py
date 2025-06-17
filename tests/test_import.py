@@ -1,5 +1,10 @@
 def test_import_alias():
     from pyrsistent_as_rpds.auto import Queue as Q1
+    from pyrsistent_as_rpds.auto import is_pure_pyrsistent_as_rpds as is_pure
+    from pyrsistent_as_rpds.auto import auto_backend
+
+    assert type(is_pure) is bool
+    assert (auto_backend == "pyrsistent") == is_pure
 
     try:
         import pyrsistent
@@ -15,5 +20,7 @@ def test_import_alias():
 
     if Q3 is not None:
         assert Q1 is Q3, "rpds-py should always be used if available"
+        assert not is_pure
     elif Q2 is not None:
         assert Q1 is Q2, "pyrsistent should be used as the fallback"
+        assert is_pure

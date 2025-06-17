@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2.1.0] - 2025-06-16
+
+### Fixed
+
+- The backend `pyrsistent_as_rpds.auto.auto_backend` was reported incorrectly
+  when using the `fake_rpds` workaround. Also expose attribute
+  `pyrsistent_as_rpds.auto.is_pure_pyrsistent_as_rpds` consistently.
+
 ## [2.0.0] - 2025-06-14
 
 ### Added

@@ -3,7 +3,7 @@ line-length = 120
 
 [project]
 name = "pyrsistent_as_rpds_py"
-version = "2.0.0"
+version = "2.1.0"
 description = "Adapter which implements a subset of rpds-py using pyrsistent. Mostly meant for PyPy."
 readme = "README.md"
 license = { text = "MIT" }
